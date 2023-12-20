@@ -1,0 +1,43 @@
+package datagen;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
+import datagen.feed.generator.FeedManager;
+
+
+public class GenericDataGenerator {
+
+	FeedManager feedManager;
+	
+	public GenericDataGenerator() throws FileNotFoundException, IOException {
+		feedManager = new FeedManager();
+	}
+	
+	public boolean GenerateData() throws IOException{
+		String feedConfigFileName = "config/datagenconfig.cfg";
+		feedManager.ReadFeedConfig(feedConfigFileName);
+		feedManager.GenerateFeeds();
+		return true;
+	}
+	
+	public static void main(String argv[])  {
+	    long startTime = System.currentTimeMillis();
+		GenericDataGenerator data_generator;
+		try {
+			data_generator = new GenericDataGenerator();
+			data_generator.GenerateData();
+		} catch (FileNotFoundException e1) {
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+
+      long stopTime = System.currentTimeMillis();
+      long elapsedTime = stopTime - startTime;
+
+      System.out.println("\nElapsed Time in seconds: " + (float)(elapsedTime/1000));
+
+	}
+}
